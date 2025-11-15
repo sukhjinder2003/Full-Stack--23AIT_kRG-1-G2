@@ -1,0 +1,99 @@
+1. What is @Autowired?
+
+@Autowired is a Spring annotation used for Dependency Injection (DI).
+Spring automatically finds, creates, and injects the required object into your class.
+
+🔥 Purpose
+
+To automatically create and inject the required bean (object).
+
+Removes need to manually write:
+
+Service service = new Service();
+
+
+Makes code cleaner and loosely coupled.
+
+✅ Example of @Autowired
+Service Class
+@Service
+public class StudentService {
+
+    public String getStudentName() {
+        return "Sukhjinder Singh";
+    }
+}
+
+Controller Class
+@RestController
+public class StudentController {
+
+    @Autowired   // Spring injects StudentService object automatically
+    private StudentService studentService;
+
+    @GetMapping("/name")
+    public String getName() {
+        return studentService.getStudentName();
+    }
+}
+
+✔️ What happens?
+
+Spring creates an object of StudentService
+
+Injects it inside StudentController
+
+You can use it without creating a new object
+
+✅ 2. What is @RequestBody?
+
+@RequestBody tells Spring Boot:
+👉 "Take the JSON sent from the client and convert it into a Java object."
+
+Used mainly in POST, PUT, PATCH operations.
+
+🔥 Purpose
+
+To read JSON data coming in API request body.
+
+Automatically convert JSON → Java Object.
+
+✅ Example of @RequestBody
+Model Class
+public class Student {
+    private String name;
+    private int age;
+
+    // getters and setters
+}
+
+Controller with @RequestBody
+@RestController
+public class StudentController {
+
+    @PostMapping("/addStudent")
+    public String addStudent(@RequestBody Student student) {
+
+        return "Student Added: " + student.getName() + ", Age: " + student.getAge();
+    }
+}
+
+✔️ JSON sent by Client (Postman / React)
+{
+  "name": "Sukhjinder",
+  "age": 22
+}
+
+✔️ What happens?
+
+JSON → Converted to Student object
+
+You can access it as:
+
+student.getName();
+student.getAge();
+
+🧾 Summary (Very Simple)
+Annotation	Purpose	Example Use
+@Autowired	Inject dependent objects automatically (Dependency Injection)	Injecting Service into Controller
+@RequestBody	Read JSON from API request body and convert to Java object	POST / PUT requests sending JSON
